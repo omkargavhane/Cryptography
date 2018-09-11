@@ -73,7 +73,7 @@ def alice():
 				print(em,'d:',info_alice[0][1],'n:',info_alice[0][2],'|FROM BOB|~>>',''.join(pt))
 				cta.remove(em)
 		l.release()
-		if cpt=='bye' or cpt=='exit' or cpt=='quit':break
+		if cpt.lower()=='bye' or cpt.lower()=='exit' or cpt.lower()=='quit':break
 		time.sleep(5)
 def bob():
 	'''bob thread sending messages to alice
@@ -90,8 +90,9 @@ def bob():
 				print(em,'d:',info_bob[0][1],'n:',info_bob[0][2],'|FROM ALICE|~>>',''.join(pt))
 				ctb.remove(em)
 		l.release()
-		if cpt=='bye' or cpt=='exit' or cpt=='quit':break
+		if cpt.lower()=='bye' or cpt.lower()=='exit' or cpt.lower()=='quit':break
 		time.sleep(5)
+print('TO TERMINATE:ENTER BYE OR QUIT OR EXIT.')
 info_alice.append(rsakeygeneration())
 info_bob.append(rsakeygeneration())
 talice=Thread(target=alice)
