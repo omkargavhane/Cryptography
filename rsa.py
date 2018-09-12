@@ -64,16 +64,16 @@ def alice():
 	while True:
 		l.acquire()
 		print('+','-'*70,'+')
-		pt=input('|ALICE|~>>');cpt=pt	
-		global ctb
-		ctb.append([(ord(c)**info_bob[0][0])%info_bob[0][2] for c in pt])#convert plain text to cipher text and store it in ctb list which acts as input message to bob
 		if len(cta)>0:
 			for em in cta:
 				pt=[chr((c**info_alice[0][1])%info_alice[0][2]) for c in em]
 				print(em,'d:',info_alice[0][1],'n:',info_alice[0][2],'|FROM BOB|~>>',''.join(pt))
 				cta.remove(em)
+		pt=input('|ALICE|~>>');cpt=[e.lower() for e in pt.split(' ')]
+		global ctb
+		ctb.append([(ord(c)**info_bob[0][0])%info_bob[0][2] for c in pt])#convert plain text to cipher text and store it in ctb list which acts as input message to bob
 		l.release()
-		if cpt.lower()=='bye' or cpt.lower()=='exit' or cpt.lower()=='quit':break
+		if 'bye' in cpt or 'exit' in cpt or 'quit' in cpt:break
 		time.sleep(5)
 def bob():
 	'''bob thread sending messages to alice
@@ -81,16 +81,16 @@ def bob():
 	while True:
 		l.acquire()
 		print('+','-'*70,'+')
-		pt=input('|BOB|~>>');cpt=pt
-		global cta
-		cta.append([(ord(c)**info_alice[0][0])%info_alice[0][2] for c in pt])#convert plain text to cipher text and store it in cta list which acts as input message to alice'''
 		if len(ctb)>0:
 			for em in ctb:
 				pt=[chr((c**info_bob[0][1])%info_bob[0][2]) for c in em]
 				print(em,'d:',info_bob[0][1],'n:',info_bob[0][2],'|FROM ALICE|~>>',''.join(pt))
 				ctb.remove(em)
+		pt=input('|BOB|~>>');cpt=[e.lower() for e in pt.split(' ')]
+		global cta
+		cta.append([(ord(c)**info_alice[0][0])%info_alice[0][2] for c in pt])#convert plain text to cipher text and store it in cta list which acts as input message to alice'''
 		l.release()
-		if cpt.lower()=='bye' or cpt.lower()=='exit' or cpt.lower()=='quit':break
+		if 'bye' in cpt or 'exit' in cpt or 'quit' in cpt:break
 		time.sleep(5)
 print('TO TERMINATE:ENTER BYE OR QUIT OR EXIT.')
 info_alice.append(rsakeygeneration())
